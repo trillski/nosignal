@@ -27,4 +27,23 @@ function checkEvent(raw,signature){const wh=process.env.STRIPE_WEBHOOK_SECRET||'
 async function webhook(req,res){try{const evt=checkEvent(await rawBody(req),req.headers['stripe-signature']);if(!evt.id||evt.livemode!==isLive())return notice(res,400,{error:'Wrong account mode'});if(['checkout.session.completed','checkout.session.async_payment_succeeded'].includes(evt.type)){const ses=evt.data?.object;if(ses?.payment_status==='paid'&&ses.metadata?.sku===PRODUCT){const canonical=await stripeAPI('GET','/v1/checkout/sessions/'+encodeURIComponent(ses.id));if(!validPaid(canonical,ses.id))return notice(res,422,{error:'Unverified order'});console.log('Validated NO SIGNAL payment',crypto.createHash('sha256').update(ses.id).digest('hex').slice(0,16))}}return notice(res,200,{received:true})}catch(e){console.error('Stripe event rejected:',e.message);return notice(res,400,{error:'Invalid webhook event'})}}
 function joinRoom(req,res,code,rooms){if(!rooms.has(code)){res.writeHead(302,{Location:'/?room_closed=1'});return res.end()}if(!isBuyer(req))setAccess(res,{kind:'guest',code,exp:Date.now()+8*3600000});res.writeHead(302,{Location:'/play?join='+encodeURIComponent(code)});res.end()}
 const readiness=()=>({liveStripeKeyPresent:/^(?:sk|rk)_live_/.test(key()),livePriceConfigured:/^price_[A-Za-z0-9_]+$/.test(String(process.env.NO_SIGNAL_PRICE_ID||'')),webhookSigningPresent:String(process.env.STRIPE_WEBHOOK_SECRET||'').startsWith('whsec_'),accessSigningPresent:secret().length>=32,mode:mode()});
-module.exports={PRODUCT,PRICE,salesMode,checkoutConfigured,createCheckout,verifyCheckout,purchasePage,webhook,notice,verify,isBuyer,canPlay,joinRoom,readiness};
+
+async function smokeCheckout(){
+ if(process.env.NO_SIGNAL_SMOKE_TEST!=='1')return;
+ if(!/^(?:sk|rk)_live_/.test(key())){console.log('NO SIGNAL checkout permission probe: missing LIVE key');return}
+ const base=BASE();let id=null;
+ try{
+  const x=await stripeAPI('POST','/v1/checkout/sessions',{
+   mode:'payment',success_url:base+'/paid?session_id={CHECKOUT_SESSION_ID}',cancel_url:base+'/offer',
+   'line_items[0][price]':process.env.NO_SIGNAL_PRICE_ID,
+   'line_items[0][quantity]':'1','metadata[sku]':PRODUCT,customer_creation:'always'
+  });
+  if(!x.id||x.livemode!==true||x.payment_status!=='unpaid'){console.log('NO SIGNAL checkout permission probe: unexpected Stripe response');return}
+  id=x.id;
+  console.log('NO SIGNAL checkout permission probe: LIVE unpaid Checkout Session created');
+  const y=await stripeAPI('POST','/v1/checkout/sessions/'+encodeURIComponent(id)+'/expire',{});
+  console.log('NO SIGNAL checkout permission probe: '+(y.status==='expired'?'session immediately expired without payment':'session expiry not confirmed'));
+ }catch(e){console.log('NO SIGNAL checkout permission probe failed:',String(e.message||'provider error').slice(0,140))}
+}
+
+module.exports={PRODUCT,PRICE,salesMode,checkoutConfigured,createCheckout,verifyCheckout,purchasePage,webhook,notice,verify,isBuyer,canPlay,joinRoom,readiness,smokeCheckout};
