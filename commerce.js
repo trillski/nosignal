@@ -41,6 +41,8 @@ async function smokeCheckout(){
   if(!x.id||x.livemode!==true||x.payment_status!=='unpaid'){console.log('NO SIGNAL checkout permission probe: unexpected Stripe response');return}
   id=x.id;
   console.log('NO SIGNAL checkout permission probe: LIVE unpaid Checkout Session created');
+  const checked=await stripeAPI('GET','/v1/checkout/sessions/'+encodeURIComponent(id));
+  console.log('NO SIGNAL checkout permission probe: session retrieval '+(checked.id===id&&checked.livemode===true&&checked.metadata?.sku===PRODUCT&&checked.amount_subtotal===PRICE?'verified':'INVALID'));
   const y=await stripeAPI('POST','/v1/checkout/sessions/'+encodeURIComponent(id)+'/expire',{});
   console.log('NO SIGNAL checkout permission probe: '+(y.status==='expired'?'session immediately expired without payment':'session expiry not confirmed'));
  }catch(e){console.log('NO SIGNAL checkout permission probe failed:',String(e.message||'provider error').slice(0,140))}
