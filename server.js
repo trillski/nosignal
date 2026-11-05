@@ -41,5 +41,5 @@ if(!publicFiles.has(route)&&route!=='/play')return fail(res,404,'Not found');
 const file=(route==='/'||route==='/play')?'index.html':route.slice(1);let content=fs.readFileSync(path.join(__dirname,file));if(file==='index.html'&&commerce.salesMode())content=Buffer.from(content.toString().replace('</head>','<script>window.NO_SIGNAL_HOST_ACCESS='+JSON.stringify(Boolean(commerce.isBuyer(req)))+';window.NO_SIGNAL_SALES_MODE=true;</script></head>'));
 const contentType=file.endsWith('.js')?'application/javascript; charset=utf-8':file.endsWith('.css')?'text/css; charset=utf-8':'text/html; charset=utf-8';res.writeHead(200,{'Content-Type':contentType,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});return res.end(content)
 }catch(e){if(!res.headersSent)fail(res,400,e.message||'Request failed')}});
-if(require.main===module)server.listen(PORT,HOST,()=>console.log('NO SIGNAL listening at '+HOST+':'+PORT));
+if(require.main===module)server.listen(PORT,HOST,()=>{console.log('NO SIGNAL listening at '+HOST+':'+PORT);const status=commerce.readiness();console.log('NO SIGNAL payment preflight:',JSON.stringify(status));});
 module.exports={server,rooms,tokens,finish};
