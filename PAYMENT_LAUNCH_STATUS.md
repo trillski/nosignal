@@ -21,3 +21,11 @@ NO_SIGNAL_SALES_MODE remains preview. Do not accept real charges until:
 4. Public GitHub repository exposure, support/refund policy, customer email recovery and room volatility are reviewed.
 
 Only Stripe sandbox is currently authorized via plugin. Never place API keys in GitHub or chat. Never treat a sandbox session as real revenue. This document is a status/handoff, not evidence that payment fulfillment or live commercial sales have been validated.
+
+## Account-sync checkpoint — Nov 5, 2026 (after merchant onboarding)
+- User reports they finished Stripe onboarding.
+- Stripe connection checked after that report: it STILL exposes only `NoSignal sandbox` (`acct_1UYUKV0LjGVamGJ1`, `livemode=false`). No live merchant context is authorized to this conversation.
+- **Do not infer that onboarding failed**; account activation and granting this integration access to the live account are separate steps.
+- NO SIGNAL Checkout remains fail-closed in `preview` mode, with no customer charges possible.
+- Re-ran local Node tests on available checkout source: `node --test tests/test_commerce.mjs` and `node --test tests/test_payment_flow.mjs` — both passed, including free guest join, download and forged signature rejection. These tests simulate Stripe; no browser test payment is claimed.
+- Stripe account connection management is the only owner-approval step still needed for the live account. After live context is visible, verify account is activated, create the LIVE price, configure live secrets in Render (never in GitHub), enable a live webhook, complete live payment/fulfillment QA, and only then enable `NO_SIGNAL_SALES_MODE=live`.
