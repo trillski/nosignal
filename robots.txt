@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /offer
+Disallow: /api/
+Disallow: /download
+Disallow: /paid
+Disallow: /purchase
+Disallow: /join/
+Sitemap: https://no-signal-1159.onrender.com/sitemap.xml
