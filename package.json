@@ -1,0 +1,12 @@
+{
+  "name": "no-signal-1159",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Original six-player cooperative mystery",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}
