@@ -18,7 +18,7 @@ const server=http.createServer(async(req,res)=>{try{const url=new URL(req.url,'h
 if(req.method==='GET'&&route==='/api/commerce/status')return reply(res,200,{salesMode:commerce.salesMode(),checkoutReady:commerce.checkoutConfigured(),priceCents:commerce.PRICE,buyer:Boolean(commerce.isBuyer(req)),readiness:commerce.readiness()});
 if(req.method==='GET'&&route==='/api/health')return reply(res,200,{ok:true,online:true,roles:6,chapters:7});
 if(req.method==='GET'&&route==='/api/state'){const q=session(url.searchParams.get('token'));return q?reply(res,200,view(q.room,q.who)):fail(res,403,'Room session expired or not found.')}
-if(req.method==='POST'&&route==='/api/checkout')return commerce.createCheckout(res);
+if(req.method==='POST'&&route==='/api/checkout'){console.log('NO SIGNAL checkout started');return commerce.createCheckout(res)}
 if(req.method==='POST'&&route==='/api/stripe/webhook')return commerce.webhook(req,res);
 if(req.method==='POST'&&route.startsWith('/api/')){const b=await body(req),action=route.slice(5);
 if(action==='create'||action==='join'){const role=String(b.role||''),name=String(b.name||'Investigator').trim().slice(0,24).replace(/[<>]/g,'');if(!game.roles.some(x=>x.id===role))return fail(res,400,'Choose a valid role.');if(!name)return fail(res,400,'Enter a display name.');if(action==='create'){if(commerce.salesMode()&&!commerce.isBuyer(req))return fail(res,402,'A purchased Case 01 pass is required to host a room.');return reply(res,200,create(name,role))}try{return reply(res,200,join(String(b.code||'').toUpperCase(),name,role))}catch(e){return fail(res,400,e.message)}}
@@ -30,7 +30,7 @@ if(action==='hint'){if(!who.host)return fail(res,403,'Only the director can requ
 if(action==='vote'){if(room.stage!==game.stages.length)return fail(res,400,'Votes open after the final lock.');const suspect=String(b.suspect||''),decision=String(b.action||'');if(!['ren','eli','joy','evelyn'].includes(suspect)||!['publish','auditors','cut'].includes(decision))return fail(res,400,'Choose a suspect and action.');room.votes[who.role]={suspect,action:decision};finish(room);return reply(res,200,{ok:true,received:Object.keys(room.votes).length,stage:room.stage})}
 return fail(res,404,'Unknown action')}
 if(req.method!=='GET')return fail(res,405,'Method not allowed');
-if(route==='/offer'||route==='/'&&commerce.salesMode()){res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store'});return res.end(fs.readFileSync(path.join(__dirname,'landing.html')))}
+if(route==='/offer'||route==='/'&&commerce.salesMode()){const rawSource=String(url.searchParams.get('utm_source')||'direct');const source=/^[a-z0-9_-]{1,32}$/i.test(rawSource)?rawSource:'other';console.log('NO SIGNAL storefront page hit / source='+source);res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store'});return res.end(fs.readFileSync(path.join(__dirname,'landing.html')))}
 if(route==='/paid')return commerce.verifyCheckout(req,res,url.searchParams.get('session_id'));
 if(route==='/purchase')return commerce.purchasePage(req,res,url.searchParams.get('session_id'));
 if(route.startsWith('/join/'))return commerce.joinRoom(req,res,route.slice(6).toUpperCase(),rooms);
