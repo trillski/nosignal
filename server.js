@@ -31,6 +31,12 @@ if(action==='vote'){if(room.stage!==game.stages.length)return fail(res,400,'Vote
 return fail(res,404,'Unknown action')}
 if(req.method!=='GET')return fail(res,405,'Method not allowed');
 if(route==='/offer'||route==='/'&&commerce.salesMode()){const rawSource=String(url.searchParams.get('utm_source')||'direct');const source=/^[a-z0-9_-]{1,32}$/i.test(rawSource)?rawSource:'other';console.log('NO SIGNAL storefront page hit / source='+source);res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store'});return res.end(fs.readFileSync(path.join(__dirname,'landing.html')))}
+if(route==='/party'||route==='/download-party'){
+  if(commerce.salesMode()&&!commerce.isBuyer(req))return fail(res,403,'Purchase required for Party Mode.');
+  const content=fs.readFileSync(path.join(__dirname,'party.html'));
+  res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'private, no-store','X-Robots-Tag':'noindex, nofollow','X-Content-Type-Options':'nosniff',...(route==='/download-party'?{'Content-Disposition':'attachment; filename=NO_SIGNAL_1159_PARTY_MODE_OFFLINE.html'}:{})});
+  return res.end(content);
+}
 if(route==='/paid')return commerce.verifyCheckout(req,res,url.searchParams.get('session_id'));
 if(route==='/purchase')return commerce.purchasePage(req,res,url.searchParams.get('session_id'));
 if(route.startsWith('/join/'))return commerce.joinRoom(req,res,route.slice(6).toUpperCase(),rooms);
@@ -38,7 +44,11 @@ if(route==='/download'){if(commerce.salesMode()&&!commerce.isBuyer(req))return f
 if(route==='/play'&&commerce.salesMode()&&!commerce.canPlay(req,rooms)){res.writeHead(302,{Location:'/'});return res.end()}
 if(commerce.salesMode()&&['/index.html','/style.css','/game-data.js','/app.js'].includes(route)&&!commerce.canPlay(req,rooms))return fail(res,403,'Purchase or valid invitation required.');
 if(!publicFiles.has(route)&&route!=='/play')return fail(res,404,'Not found');
-const file=(route==='/'||route==='/play')?'index.html':route.slice(1);let content=fs.readFileSync(path.join(__dirname,file));if(file==='index.html'&&commerce.salesMode())content=Buffer.from(content.toString().replace('</head>','<script>window.NO_SIGNAL_HOST_ACCESS='+JSON.stringify(Boolean(commerce.isBuyer(req)))+';window.NO_SIGNAL_SALES_MODE=true;</script></head>'));
+const file=(route==='/'||route==='/play')?'index.html':route.slice(1);let content=fs.readFileSync(path.join(__dirname,file));if(file==='index.html'&&commerce.salesMode()){
+  let html=content.toString().replace('</head>','<script>window.NO_SIGNAL_HOST_ACCESS='+JSON.stringify(Boolean(commerce.isBuyer(req)))+';window.NO_SIGNAL_SALES_MODE=true;</script></head>');
+  if(commerce.isBuyer(req))html=html.replace('<body>','<body><nav style="position:relative;z-index:100;background:#18273b;color:#fff;padding:12px 18px;text-align:center;font:600 15px system-ui"><a href="/party" style="color:#f8d1a1">NEW: Play the faster 10–18 minute Party Mode</a> · <a href="/download-party" style="color:#ddd">Offline copy</a></nav>');
+  content=Buffer.from(html);
+}
 const contentType=file.endsWith('.xml')?'application/xml; charset=utf-8':file.endsWith('.txt')?'text/plain; charset=utf-8':file.endsWith('.svg')?'image/svg+xml':file.endsWith('.png')?'image/png':file.endsWith('.js')?'application/javascript; charset=utf-8':file.endsWith('.css')?'text/css; charset=utf-8':'text/html; charset=utf-8';res.writeHead(200,{'Content-Type':contentType,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});return res.end(content)
 }catch(e){if(!res.headersSent)fail(res,400,e.message||'Request failed')}});
 if(require.main===module)server.listen(PORT,HOST,()=>{console.log('NO SIGNAL listening at '+HOST+':'+PORT);const status=commerce.readiness();console.log('NO SIGNAL payment preflight:',JSON.stringify(status));if(process.env.NO_SIGNAL_SMOKE_TEST==='1')commerce.smokeCheckout().catch(e=>console.log('NO SIGNAL checkout smoke check failed'));if(status.liveStripeKeyPresent&&status.livePriceConfigured){const https=require('node:https');const k=process.env.STRIPE_SECRET_KEY||'',id=process.env.NO_SIGNAL_PRICE_ID||'';const p=https.get({hostname:'api.stripe.com',path:'/v1/prices/'+encodeURIComponent(id),headers:{Authorization:'Bearer '+k},timeout:10000},v=>{console.log('NO SIGNAL Stripe authenticated live-price check:',v.statusCode===200?'HTTP 200 (key verified)':'HTTP '+v.statusCode);v.resume()});p.on('error',e=>console.log('NO SIGNAL Stripe key check unavailable:',e.code||'connection'));p.on('timeout',()=>p.destroy());}});
