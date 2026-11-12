@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080f1b"><meta name="robots" content="noindex,nofollow">
+<title>NO SIGNAL: 11:59 | Party Mode — Case 01</title>
+<style>
+:root{--bg:#080e19;--panel:#121e30;--light:#1b2c42;--border:#344960;--ink:#f5f2eb;--dim:#aec0d3;--red:#ff8586;--gold:#f4bd86;--mint:#82e2d0}*{box-sizing:border-box}
+html{background:var(--bg)}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 100% 0%,#2e263b66,transparent 48%),radial-gradient(ellipse at 0% 100%,#17435755,transparent 47%),var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+button,select{font:inherit}button{cursor:pointer}button:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+main{max-width:720px;margin:auto;padding:16px 16px 94px}.brand{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0 18px;border-bottom:1px solid #395067}
+.brand-name{font-weight:950;font-size:22px;letter-spacing:.01em}.brand-name span{color:var(--red)}.badge{font:700 11px/1.3 ui-monospace,Consolas,monospace;letter-spacing:.12em;color:var(--gold);text-align:right}
+h1,h2,h3,p{margin:0}h1{font-size:clamp(29px,7vw,48px);line-height:1.13;letter-spacing:-.035em}h2{font-size:clamp(25px,5.5vw,35px);line-height:1.2}h3{font-size:19px}
+.kicker{font-size:12px;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;font-weight:850;margin:0 0 12px}.intro{font-size:18px;color:var(--dim);max-width:580px;margin-top:14px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:22px;padding:20px;margin:16px 0}.bright{background:linear-gradient(145deg,#253851,#152335);border-color:#638098}.soft{color:var(--dim)}
+.row{display:flex;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap}.stack{display:grid;gap:12px;margin-top:18px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.mini{font-size:13px;color:var(--dim)}.big-number{font-size:clamp(42px,10vw,67px);font-weight:950;line-height:1.2;color:var(--gold)}
+.btn{display:block;width:100%;border:1px solid #526c86;background:#213349;color:#fff;border-radius:15px;padding:15px 13px;min-height:58px;font-weight:850;text-align:center;transition:transform .12s,background .12s;text-decoration:none}
+.btn:active{transform:scale(.985)}.btn.primary{background:var(--gold);color:#101b2a;border-color:#ffcf9d}.btn.danger{background:#57313b;border-color:#bd6b78}.btn.ghost{background:transparent;border-color:#415771}.btn.selected{border-color:#eec08f;background:#3c3b3d}
+.btn small{display:block;font-size:12px;font-weight:500;margin-top:4px;opacity:.84}.btn:disabled{opacity:.48;cursor:not-allowed}
+.role{display:flex;align-items:center;justify-content:space-between;gap:5px;min-height:75px;flex-direction:column}.role .name{font-size:14px;line-height:1.2}.role .check{color:var(--mint);font-size:11px}
+.answer{display:flex;align-items:center;gap:14px;text-align:left;padding:18px;min-height:96px}.answer .letter{font-size:25px;font-weight:950;color:var(--gold);min-width:32px}
+.clue-label{font-weight:850;color:var(--gold);font-size:13px;letter-spacing:.1em;text-transform:uppercase}.clue-fact{font-weight:900;font-size:clamp(27px,7vw,42px);line-height:1.14;letter-spacing:-.025em;margin:12px 0 18px}.share{background:#1a3440;padding:14px 16px;border-radius:13px;border-left:4px solid var(--mint);font-size:18px}
+.progress{display:flex;gap:7px;margin:20px 0}.progress>span{height:7px;flex:1;background:#273b50;border-radius:8px}.progress>span.done{background:var(--gold)}.progress>span.now{background:var(--red)}.decision{font-size:clamp(23px,6vw,31px);font-weight:900;line-height:1.2;margin:12px 0 18px}
+.result{border-left:4px solid var(--mint);background:#163039}.result h2{margin:12px 0}.eyebrow{color:var(--red);font-size:14px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}
+.details{margin:12px 0}summary{cursor:pointer;color:var(--gold);font-size:14px;font-weight:750}details>p{margin-top:9px;color:var(--dim)}
+.hint{color:var(--dim);font-size:13px;line-height:1.45}.text-link{color:var(--gold);text-underline-offset:3px}.footer{margin:28px 0 0;text-align:center;font-size:12px;color:#849bb1}.subline{padding-top:12px;border-top:1px solid #31465c;color:var(--dim);font-size:13px}.countdown{font:900 27px ui-monospace,Consolas,monospace;color:var(--red)}.vote-label{color:var(--gold);font-size:14px;font-weight:850;margin:20px 0 8px}
+@media(min-width:650px){main{padding:24px 24px 80px}.card{padding:28px}.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){.btn{transition:none}}
+</style></head><body>
+<main>
+<header class="brand"><div class="brand-name">NO SIGNAL <span>11:59</span></div><div class="badge">CASE 01<br>PARTY MODE</div></header>
+<div id="app" aria-live="polite"></div>
+<footer class="footer">An original Good Company mystery · No alcohol required · Save your progress automatically</footer>
+</main>
+<script>
+(()=>{'use strict';
+const SAVE='nosignal-party-v1';
+const roles=[
+{id:'signal',name:'Signal Engineer',short:'Signal'},
+{id:'security',name:'Security Lead',short:'Security'},
+{id:'stage',name:'Stage Manager',short:'Stage'},
+{id:'finance',name:'Finance Auditor',short:'Finance'},
+{id:'press',name:'Reporter',short:'Reporter'},
+{id:'network',name:'Network Analyst',short:'Network'}
+];
+const rounds=[
+{id:'blackout',time:'11:47 PM',title:'THE BLACKOUT',question:'What do we check first?',options:[['CAMERA','Restore Camera 08'],['RELAY','Trace the switch']],outcomes:{CAMERA:'Camera 08 was disabled manually. A runner crossed the corridor.',RELAY:'The relay was deliberately switched off. Someone wanted a blind spot.'},clues:{
+signal:['The camera was switched off.','It was not an accident.'],
+security:['Camera 08 is on Floor 04.','Search the service level.'],
+stage:['The blackout cue was number 17.','That number may help.'],
+finance:['Donation totals were not approved.','Something else was hidden.'],
+press:['Mara warned: “Don’t trust the broadcast.”','The video may be a setup.'],
+network:['A valid device cut the signal.','Someone used system access.']}},
+{id:'badge',time:'11:49 PM',title:'THE IMPOSSIBLE BADGE',question:'Which lead should we follow?',options:[['BADGE','Follow the badge'],['SUITE','Check the computer']],outcomes:{BADGE:'Eli was on camera in the lobby. His badge must have been copied.',SUITE:'The producer suite computer MER-02 accepted the fake badge.'},clues:{
+signal:['The badge ping used the broadcast network.','It was not a normal door scan.'],
+security:['Eli appears in the lobby at 11:49.','He could not be in two places.'],
+stage:['MER-02 was active all night.','The producer suite is suspicious.'],
+finance:['Eli carried charity envelopes.','His movements have an explanation.'],
+press:['I saw Eli in the lobby.','His badge cannot prove he entered.'],
+network:['The same badge appeared twice.','One scan was copied.']}},
+{id:'money',time:'11:51 PM',title:'THE FAKE TOTAL',question:'How do we investigate the money?',options:[['AUDIT','Compare the numbers'],['BOX','Inspect the donations']],outcomes:{AUDIT:'The screen inflated the verified total by $36,000. No theft is proven.',BOX:'Donation envelopes stayed secured. The lie is on the screen: $36,000 extra.'},clues:{
+signal:['The screen said $284,950.','That number was broadcast.'],
+security:['No envelopes left the lobby.','Missing cash is not proven.'],
+stage:['The host was told to wait.','The number was not approved.'],
+finance:['Real receipts total $248,950.','The public number is wrong.'],
+press:['Mara challenged the total.','She wanted the real figure.'],
+network:['MER-02 edited the ticker.','The change was deliberate.']}},
+{id:'recording',time:'11:55 PM',title:'THE FAKE CONFESSION',question:'What is the stronger lead?',options:[['MARA','Find Mara'],['AUDIO','Check the recording']],outcomes:{MARA:'Mara is safe behind blue door S3. She kept the uncut recording.',AUDIO:'MASTER-2346 is authentic. The scheduled apology is a forgery.'},clues:{
+signal:['The fake apology has no bells.','Its audio was altered.'],
+security:['Blue door S3 opened at 11:52.','Someone went through it.'],
+stage:['Three bells rang at 11:46.','The real audio has them.'],
+finance:['Mara wanted the clean ledger.','She was exposing a false total.'],
+press:['Mara said: “Numbers cannot forgive a lie.”','That line is in the real audio.'],
+network:['MASTER-2346 came first.','The apology was uploaded later.']}},
+{id:'operator',time:'11:57 PM',title:'WHO PRESSED SEND?',question:'Whose evidence feels strongest?',options:[['REN','Ren, the producer'],['ELI','Eli, the runner']],outcomes:{REN:'Ren’s signed job token queued the fake confession. Who ordered it remains unproven.',ELI:'Eli’s badge was borrowed, but his device did not queue the fake. Follow the signed record.'},clues:{
+signal:['The fake video is set for midnight.','The clock is running.'],
+security:['Eli loaned his badge to Ren.','The badge was borrowed.'],
+stage:['Joy stayed onstage.','She did not use MER-02.'],
+finance:['Evelyn approved the false total.','That alone does not prove an order.'],
+press:['Ren cut Mara’s interview.','He wanted her silenced.'],
+network:['MER-02 job was signed REN.','The uploader was Ren.']}}
+];
+const endingText={
+truth:{headline:'THE TRUTH GOES LIVE',body:'The authentic recording and corrected ledger air. Ren’s upload is documented. Mara can finally speak.'},
+gray:{headline:'EVIDENCE SAVED',body:'The team pauses the broadcast and sends the uncut audio to independent auditors. The public learns the truth later.'},
+silence:{headline:'THE SIGNAL GOES DARK',body:'The forged confession never airs, but the crowd sees only a blackout. The investigation continues.'},
+false:{headline:'THE WRONG ACCUSATION',body:'The team blames Eli, but the signed upload points to Ren. The forged clip is stopped, yet the case remains confused.'}
+};
+const safe=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let s={view:'setup',players:6,round:0,seen:[],current:null,history:[],finalSuspect:null,finalAction:null,clock:45,clockOn:false};
+try{let t=JSON.parse(localStorage.getItem(SAVE)||'null');if(t&&Number.isInteger(t.round)&&t.round>=0&&t.round<=5&&['setup','round','clue','decision','outcome','final','ending'].includes(t.view))s={...s,...t,clockOn:false};}catch(e){}
+const app=document.getElementById('app');let timer=null;
+function save(){try{localStorage.setItem(SAVE,JSON.stringify({...s,clockOn:false}));}catch(e){}}
+function button(text,act,cls=''){return '<button type="button" class="btn '+cls+'" data-act="'+safe(act)+'">'+text+'</button>'}
+function progress(){return '<div class="progress" aria-label="Round progress">'+Array.from({length:5},(_,i)=>'<span class="'+(i<s.round?'done':i===s.round?'now':'')+'"></span>').join('')+'</div>'}
+function header(r){return '<div class="kicker">Round '+(s.round+1)+' of 5 · '+safe(r.time)+'</div>'+progress()+'<h1>'+safe(r.title)+'</h1>'}
+function resetTimer(){if(timer){clearInterval(timer);timer=null;}s.clockOn=false;}
+function render(){save();let h='';
+if(s.view==='setup'){
+h='<section class="card bright"><div class="kicker">Short mystery · One device</div><h1>PLAY THE TRUTH.<br>NOT THE PAPERWORK.</h1><p class="intro">Six secret files. Five fast rounds. One final decision.</p><div class="row" style="margin-top:20px"><div><strong>10–18 minutes</strong><div class="mini">At your own pace</div></div><div><strong>1–6 friends</strong><div class="mini">Pass-and-play</div></div></div></section>'+
+'<section class="card"><h2>Set up your crew</h2><p class="soft" style="margin-top:8px">Choose how many people are playing. You’ll still uncover all six roles.</p><label class="vote-label" for="players">Players</label><select id="players" class="btn" style="margin-top:8px">'+[1,2,3,4,5,6].map(n=>'<option value="'+n+'" '+(n===s.players?'selected':'')+'>'+n+' '+(n===1?'player':'players')+'</option>').join('')+'</select><div class="stack">'+button('START THE MYSTERY','begin','primary')+'</div></section>'+
+'<details class="details"><summary>How to play (20 seconds)</summary><p>Tap each role to reveal a short private clue. Read it, hide it, and pass the device. After everyone compares clues, choose one group action. Complete five rounds, then make the final decision. No one needs to drink.</p></details>';
+}else if(s.view==='round'){
+let r=rounds[s.round];
+h='<section class="card">'+header(r)+'<p class="intro">Pass the device. Reveal one clue at a time.</p>'+
+'<div class="grid" style="margin-top:22px">'+roles.map((role,i)=>'<button class="btn role" data-role="'+role.id+'" aria-label="View '+safe(role.name)+' clue"><span class="name">'+(i+1)+'. '+safe(role.name)+'</span><span class="check">'+(s.seen.includes(role.id)?'✓ Seen':'TAP TO REVEAL')+'</span></button>').join('')+'</div>'+
+'<p class="hint" style="margin-top:14px">'+s.seen.length+'/6 clues seen · 1–6 people can share the roles</p>'+
+'<div class="stack">'+button(s.seen.length?'DISCUSS + CHOOSE':'SKIP TO GROUP CHOICE','decision','primary')+'</div></section>';
+}else if(s.view==='clue'){
+let r=rounds[s.round],role=roles.find(x=>x.id===s.current),c=r?.clues[role?.id];
+h='<section class="card">'+header(r)+'<div class="kicker" style="margin-top:18px">'+safe(role?.name)+' · Private clue</div>'+
+'<div class="card bright"><div class="clue-label">You found</div><div class="clue-fact">'+safe(c?.[0])+'</div><div class="share"><strong>Tell the group:</strong><div style="margin-top:7px">'+safe(c?.[1])+'</div></div></div>'+
+'<div class="stack">'+button('HIDE CLUE + PASS DEVICE','close-clue','primary')+button('BACK TO ROLES','round','ghost')+'</div></section>';
+}else if(s.view==='decision'){
+let r=rounds[s.round];h='<section class="card">'+header(r)+'<p class="intro">Talk it over together. Then choose one option.</p>'+
+'<div class="decision">'+safe(r.question)+'</div><div class="stack">'+r.options.map((c,i)=>'<button class="btn answer" data-choice="'+c[0]+'"><span class="letter">'+(i?'B':'A')+'</span><span>'+safe(c[1])+'</span></button>').join('')+'</div>'+
+'<div class="card"><div class="row"><strong>Optional discussion clock</strong><span class="countdown" id="clock">'+String(Math.floor(s.clock/60)).padStart(2,'0')+':'+String(s.clock%60).padStart(2,'0')+'</span></div><div class="grid" style="margin-top:12px">'+button(s.clockOn?'PAUSE':'START 45s','timer','ghost')+button('+30 SECONDS','extend','ghost')+'</div><p class="hint" style="margin-top:10px">No penalty when time runs out.</p></div>'+button('BACK TO CLUES','round','ghost')+'</section>';
+}else if(s.view==='outcome'){
+let r=rounds[s.round],v=s.history[s.round];h='<section class="card">'+header(r)+'<div class="card result"><div class="kicker">You chose '+(v?.choice===r.options[0][0]?'A':'B')+'</div><h2>NEW EVIDENCE</h2><p style="font-size:21px;line-height:1.35">'+safe(r.outcomes[v?.choice]||'The case continues.')+'</p></div><div class="stack">'+button(s.round===4?'MAKE THE FINAL CALL':'NEXT ROUND','next','primary')+'</div></section>';
+}else if(s.view==='final'){
+h='<section class="card"><div class="kicker">Final round · 11:59 PM</div><h1>ONE LAST DECISION.</h1><p class="intro">The evidence is in. Make two calls as a group.</p>'+
+'<div class="vote-label">1. Who queued the fake confession?</div><div class="stack">'+[['REN','Ren — producer'],['ELI','Eli — runner']].map(z=>button(s.finalSuspect===z[0]?'✓ '+z[1]:z[1],'suspect:'+z[0],s.finalSuspect===z[0]?'selected':'ghost')).join('')+'</div>'+
+'<div class="vote-label">2. What happens to the broadcast?</div><div class="stack">'+[['publish','AIR THE REAL RECORDING'],['hold','PRESERVE PROOF. WAIT.'],['cut','CUT THE SIGNAL']].map(z=>button((s.finalAction===z[0]?'✓ ':'')+z[1],'broadcast:'+z[0],s.finalAction===z[0]?'selected':'ghost')).join('')+'</div><div class="stack">'+button('REVEAL OUR ENDING','ending','primary')+'</div></section>';
+}else if(s.view==='ending'){
+let type=s.finalSuspect==='ELI'?'false':s.finalAction==='publish'?'truth':s.finalAction==='hold'?'gray':'silence';let ending=endingText[type];
+h='<section class="card"><div class="kicker">Case closed · Ending</div><h1>'+safe(ending.headline)+'</h1><div class="card bright" style="margin-top:20px"><p style="font-size:20px;line-height:1.5">'+safe(ending.body)+'</p></div><div class="kicker">You found '+s.history.length+' of 5 round decisions</div><div class="stack">'+button('PLAY AGAIN','restart','primary')+'<a class="btn ghost" href="/play">Open Classic Mode</a><a class="btn ghost" href="/download-party">Download Party Mode</a></div></section>';
+}
+app.innerHTML=h;
+if(s.view==='decision'&&s.clockOn)startTimer();
+}
+function startTimer(){if(timer)clearInterval(timer);timer=setInterval(()=>{if(s.view!=='decision'||!s.clockOn){clearInterval(timer);timer=null;return;}if(s.clock>0)s.clock--;if(s.clock===0){s.clockOn=false;clearInterval(timer);timer=null;}const el=document.getElementById('clock');if(el)el.textContent=String(Math.floor(s.clock/60)).padStart(2,'0')+':'+String(s.clock%60).padStart(2,'0');},1000)}
+function act(name){
+ if(name==='begin'){s.players=Number(document.getElementById('players')?.value)||6;s.round=0;s.history=[];s.seen=[];s.view='round';}
+ else if(name==='round'){resetTimer();s.view='round';}
+ else if(name==='close-clue'){if(s.current&&!s.seen.includes(s.current))s.seen.push(s.current);s.current=null;s.view='round';}
+ else if(name==='decision'){s.view='decision';s.clock=45;resetTimer();}
+ else if(name==='timer'){if(s.clock<=0)s.clock=45;s.clockOn=!s.clockOn;if(!s.clockOn)resetTimer();}
+ else if(name==='extend'){s.clock=Math.min(180,s.clock+30);}
+ else if(name==='next'){resetTimer();if(s.round===4)s.view='final';else{s.round++;s.seen=[];s.view='round';}}
+ else if(name.startsWith('suspect:'))s.finalSuspect=name.slice(8);
+ else if(name.startsWith('broadcast:'))s.finalAction=name.slice(10);
+ else if(name==='ending'){if(!s.finalSuspect||!s.finalAction){alert('Choose an accusation and a broadcast action first.');return;}s.view='ending';}
+ else if(name==='restart'){resetTimer();s={view:'setup',players:s.players,round:0,seen:[],current:null,history:[],finalSuspect:null,finalAction:null,clock:45,clockOn:false};}
+ render();if(name!=='timer'&&name!=='extend')window.scrollTo({top:0,behavior:'instant'});
+}
+document.addEventListener('click',e=>{
+ const role=e.target.closest('[data-role]');if(role){s.current=role.dataset.role;s.view='clue';render();window.scrollTo(0,0);return;}
+ const choice=e.target.closest('[data-choice]');if(choice&&s.view==='decision'){resetTimer();s.history[s.round]={choice:choice.dataset.choice};s.view='outcome';render();window.scrollTo(0,0);return;}
+ const b=e.target.closest('[data-act]');if(b){act(b.dataset.act);}
+});
+window.addEventListener('pagehide',save);
+render();
+})();
+</script></body></html>
