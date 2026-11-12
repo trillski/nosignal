@@ -123,7 +123,7 @@ h='<section class="card"><div class="kicker">Final round · 11:59 PM</div><h1>ON
 '<div class="vote-label">2. What happens to the broadcast?</div><div class="stack">'+[['publish','AIR THE REAL RECORDING'],['hold','PRESERVE PROOF. WAIT.'],['cut','CUT THE SIGNAL']].map(z=>button((s.finalAction===z[0]?'✓ ':'')+z[1],'broadcast:'+z[0],s.finalAction===z[0]?'selected':'ghost')).join('')+'</div><div class="stack">'+button('REVEAL OUR ENDING','ending','primary')+'</div></section>';
 }else if(s.view==='ending'){
 let type=s.finalSuspect==='ELI'?'false':s.finalAction==='publish'?'truth':s.finalAction==='hold'?'gray':'silence';let ending=endingText[type];
-h='<section class="card"><div class="kicker">Case closed · Ending</div><h1>'+safe(ending.headline)+'</h1><div class="card bright" style="margin-top:20px"><p style="font-size:20px;line-height:1.5">'+safe(ending.body)+'</p></div><div class="kicker">You found '+s.history.length+' of 5 round decisions</div><div class="stack">'+button('PLAY AGAIN','restart','primary')+'<a class="btn ghost" href="/play">Open Classic Mode</a><a class="btn ghost" href="/download-party">Download Party Mode</a></div></section>';
+h='<section class="card"><div class="kicker">Case closed · Ending</div><h1>'+safe(ending.headline)+'</h1><div class="card bright" style="margin-top:20px"><p style="font-size:20px;line-height:1.5">'+safe(ending.body)+'</p></div><div class="kicker">You found '+s.history.length+' of 5 round decisions</div><div class="stack">'+button('PLAY AGAIN','restart','primary')+(location.protocol==='file:'?'':'<a class="btn ghost" href="/play">Open Classic Mode</a><a class="btn ghost" href="/download-party">Download Party Mode</a>')+'</div></section>';
 }
 app.innerHTML=h;
 if(s.view==='decision'&&s.clockOn)startTimer();
